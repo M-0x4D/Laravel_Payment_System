@@ -21,9 +21,28 @@ class Client extends Model
         return $this->belongsTo('App\models\Country');
     }
 
+    //! transtaction ==> one relation 
+
     public function transactions()
     {
         return $this->hasMany('App\models\Transaction');
     }
+
+
+    //! role ==> one relation
+
+    public function client_role()
+    {
+        return $this->belongsToMany('App\models\Role' , 'model_has_roles' , 'model_id');
+    } 
+
+
+    //! permission ==> one relation
+
+    public function client_permisson()
+    {
+        return $this->belongsToMany('App\models\Permission' , 'model_has_permissions' , 'model_id');
+    } 
+
 
 }

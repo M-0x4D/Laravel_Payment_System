@@ -24,7 +24,11 @@ class Authcontroller extends Controller
             'email' => 'required',
             'phone' => ['required' , 'unique:clients' ],
             'password' => ['required' , ],
-            'city_id' => 'required'
+            'city_id' => 'required' ,
+            'amount' => 'required' ,
+            'balance' => 'required',
+            'country_id' => 'required' ,
+            'date_of_birth' => 'required' ,
         ]);
         if ($validator->fails()) {
             # code...
@@ -37,6 +41,7 @@ class Authcontroller extends Controller
         $request->merge(["password" => bcrypt($request->password)]);
         $client = Client::create($request->all());
         $client->api_token = Str::random(60);
+        $client->status = true;
         $client->save();
         $client->client_role()->attach(4 , ['model_type' => 'test' , 'model_id' => $client->id]);
         return returnjson(1 , 'success' , $client);
@@ -116,7 +121,7 @@ class Authcontroller extends Controller
 
 
 
-    
+
     function new_password(Request $request)
     {
         if ($request->pin_code == $request->user()->pin_code && $request->password === $request->confirm_password) {
