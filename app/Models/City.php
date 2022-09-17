@@ -9,7 +9,7 @@ class City extends Model
 
     protected $table = 'cities';
     public $timestamps = true;
-    protected $fillable = array('name');
+    protected $fillable = array('name' , 'governrate_id');
 
     public function clients()
     {
@@ -20,5 +20,13 @@ class City extends Model
     {
         return $this->belongsTo('App\models\Country');
     }
+
+
+    public function governrate()
+    {
+        return $this->belongsTo('App\models\Governrate');
+    }
+
+
 
 }

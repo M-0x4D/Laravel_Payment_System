@@ -4,7 +4,7 @@
 use Illuminate\Support\Facades\Validator;
 
 
-function returnjson($status,$msg , $data=null)
+function json_return($status,$msg , $data=null)
 {
 
     $response = [
@@ -13,7 +13,7 @@ function returnjson($status,$msg , $data=null)
         "data" => $data
     ];
 
-    return response()->json($response);
+    return $response;
 }
 
 

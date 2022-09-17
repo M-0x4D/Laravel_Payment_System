@@ -9,7 +9,7 @@ class Transaction extends Model
 
     protected $table = 'transactions';
     public $timestamps = true;
-    protected $fillable = array('sender_id', 'receiver_id', 'amount', 'currency', 'service');
+    protected $fillable = array('sender_id', 'receiver_id', 'amount', 'currency_id', 'service');
 
     public function client()
     {

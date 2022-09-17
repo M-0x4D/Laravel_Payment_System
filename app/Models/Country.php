@@ -21,4 +21,11 @@ class Country extends Model
         return $this->hasMany('App\models\City');
     }
 
+
+
+    public function governrates()
+    {
+        return $this->hasMany('App\models\Governrate');
+    }
+
 }

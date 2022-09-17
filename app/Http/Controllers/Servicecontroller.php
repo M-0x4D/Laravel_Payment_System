@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\models\Client;
+use App\Models\Currency;
 use Illuminate\Http\Request;
 
 class Servicecontroller extends Controller
@@ -12,14 +13,14 @@ class Servicecontroller extends Controller
     {
         $validator = validator()->make($request->all() , [
 
-            'sender_id' => 'required',
+           
             'receiver_id' => 'required', 
             'amount' => 'required' ,
             'currency_id' => 'required'
         ]);
         if ($validator->fails()) {
             # code...
-             return returnjson(0 , 'failed' , 'no data');
+             return json_return(0 , 'failed' , 'validation error ');
         }
 
         if ($request->user()->balance >= $request->amount) {
@@ -35,11 +36,13 @@ class Servicecontroller extends Controller
                 'amount' => $request->amount ,
                 'currency_id' => $request->currency_id ,
             ]);
-            return returnjson(1 , 'success' , 'تم تحويل مبلغ' . $request->amount . 'الي العمل رقم ' . $request->receiver_id);
+
+           $currency = Currency::where('id' ,$request->currency_id )->first();
+            return json_return(1 , 'success' , ' تم تحويل مبلغ'  . ' '. $request->amount . ' ' . $currency->name . ' '. 'الي العمل رقم ' . $request->receiver_id);
         }
         else {
             
-            return returnjson(0 , 'failed' , 'no data');
+            return json_return(0 , 'failed' , 'you have no enough balance ');
         }
     }
 }

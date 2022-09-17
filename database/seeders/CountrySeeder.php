@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Currency;
+use App\models\Country;
 use Illuminate\Database\Seeder;
 
-class CurrencySeeder extends Seeder
+class CountrySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,8 +14,8 @@ class CurrencySeeder extends Seeder
      */
     public function run()
     {
-        $currency = new Currency();
-        $currency->name = 'جنيه مصري';
-        $currency->save();
+        $country = new Country();
+        $country->name = 'Egypt';
+        $country->save();
     }
 }

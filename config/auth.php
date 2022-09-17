@@ -48,7 +48,7 @@ return [
 
         'api_web' => [
             'driver' => 'session',
-            'provider' => 'clients',
+            'provider' => 'client',
             
         ],
     ],
@@ -77,8 +77,8 @@ return [
         ],
 
         'client' => [
-            'driver' => 'database',
-            'table' => App\models\Client::class,
+            'driver' => 'eloquent',
+            'model' => App\models\Client::class,
         ],
     ],
 

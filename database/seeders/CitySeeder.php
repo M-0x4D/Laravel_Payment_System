@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Currency;
+use App\models\City;
 use Illuminate\Database\Seeder;
 
-class CurrencySeeder extends Seeder
+class CitySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,8 +14,9 @@ class CurrencySeeder extends Seeder
      */
     public function run()
     {
-        $currency = new Currency();
-        $currency->name = 'جنيه مصري';
-        $currency->save();
+        $city = new City();
+        $city->name = 'mansoura';
+        $city->governrate_id = 1;
+        $city->save();
     }
 }

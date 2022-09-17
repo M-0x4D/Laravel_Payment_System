@@ -3,13 +3,15 @@
 namespace App\models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticable;
 
-class Client extends Model 
+
+class Client extends Authenticable 
 {
 
     protected $table = 'clients';
     public $timestamps = true;
-    protected $fillable = array('name', 'balance', 'password', 'api_token', 'status', 'pin_code', 'city_id', 'date_of_birth');
+    protected $fillable = array('name','email' , 'balance', 'password', 'api_token', 'status', 'pin_code', 'city_id', 'date_of_birth' , 'country_id' , 'phone');
 
     public function city()
     {
@@ -25,7 +27,7 @@ class Client extends Model
 
     public function transactions()
     {
-        return $this->hasMany('App\models\Transaction');
+        return $this->hasMany('App\models\Transaction' , 'sender_id');
     }
 
 
@@ -44,5 +46,10 @@ class Client extends Model
         return $this->belongsToMany('App\models\Permission' , 'model_has_permissions' , 'model_id');
     } 
 
+
+    protected $hidden = [
+        'password',
+        'api_token',
+    ];
 
 }
