@@ -27,10 +27,11 @@ class Authcontroller extends Controller
             'city_id' => 'required' ,
             'balance' => 'required',
             'date_of_birth' => 'required' ,
+            'governrate_id' => 'required'
         ]);
         if ($validator->fails()) {
             # code...
-             return json_return(0 , 'failed' , 'no data');
+             return json_return(0 , 'failed' , 'validation error');
             }
         else {
         $phone = Client::where('phone' , $request->phone)->first();
@@ -46,7 +47,7 @@ class Authcontroller extends Controller
         }
         else
         {
-            return json_return(0 , 'failed' , 'no data');
+            return json_return(0 , 'failed' , 'this phone is taken by another user');
         }   
         }
      

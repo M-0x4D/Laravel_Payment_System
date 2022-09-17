@@ -11,11 +11,16 @@ class Client extends Authenticable
 
     protected $table = 'clients';
     public $timestamps = true;
-    protected $fillable = array('name','email' , 'balance', 'password', 'api_token', 'status', 'pin_code', 'city_id', 'date_of_birth' , 'country_id' , 'phone');
+    protected $fillable = array('name','email' , 'balance', 'password', 'api_token', 'status', 'pin_code', 'city_id', 'date_of_birth' , 'country_id' , 'phone' , 'governrate_id');
 
     public function city()
     {
         return $this->belongsTo('App\models\City');
+    }
+
+    public function governrate()
+    {
+        return $this->belongsTo('App\models\Governrate');
     }
 
     public function country()

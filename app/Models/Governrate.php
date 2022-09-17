@@ -21,6 +21,12 @@ class Governrate extends Model
     }
 
 
+    public function clients()
+    {
+        return $this->hasMany('App\models\Client');
+    }
+
+
 
     public function country()
     {
