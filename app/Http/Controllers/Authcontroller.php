@@ -79,16 +79,20 @@ class Authcontroller extends Controller
                  return json_return(1,'success',['api_token' =>  $client->api_token ,'user' => $client]);
 
             }
+            else
+        {
+            return json_return(0,'failed','password is not valid');
+        }
             
         }
         else
         {
-            return json_return(0,'failed','no log in ');
+            return json_return(0,'failed','phone number is not valid');
         }
            // 
             }
         else {
-            return json_return(0,'failed','no log in ');
+            return json_return(0,'failed','validation error ');
         }        
         
     }
