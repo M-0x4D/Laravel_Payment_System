@@ -18,6 +18,7 @@ use App\Http\Controllers\Servicecontroller;
 
 Route::group(['prefix' => 'v1'] ,  function()
 {
+    Route::post('transfare-gateway', [Servicecontroller::class , 'transfare_gateway']);
     Route::post('register', [Authcontroller::class , 'register']);
     Route::post('login', [Authcontroller::class , 'login']);
     Route::post('test', [Authcontroller::class , 'test']);
