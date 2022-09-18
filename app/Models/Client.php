@@ -11,7 +11,7 @@ class Client extends Authenticable
 
     protected $table = 'clients';
     public $timestamps = true;
-    protected $fillable = array('name','email' , 'balance', 'password', 'api_token', 'status', 'pin_code', 'city_id', 'date_of_birth' , 'country_id' , 'phone' , 'governrate_id');
+    protected $fillable = array('name','email' , 'balance', 'password', 'api_token', 'status', 'pin_code', 'city_id', 'date_of_birth' , 'country_id' , 'phone' , 'governrate_id' , 'account_number');
 
     public function city()
     {
@@ -32,7 +32,7 @@ class Client extends Authenticable
 
     public function transactions()
     {
-        return $this->hasMany('App\models\Transaction' , 'sender_id');
+        return $this->hasMany('App\models\Transaction' , 'sender_account_number' , 'account_number');
     }
 
 
@@ -55,6 +55,7 @@ class Client extends Authenticable
     protected $hidden = [
         'password',
         'api_token',
+        'account_number'
     ];
 
 }

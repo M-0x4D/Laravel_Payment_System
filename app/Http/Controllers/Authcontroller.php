@@ -27,7 +27,7 @@ class Authcontroller extends Controller
             'city_id' => 'required' ,
             'balance' => 'required',
             'date_of_birth' => 'required' ,
-            'governrate_id' => 'required'
+            'governrate_id' => 'required' 
         ]);
         if ($validator->fails()) {
             # code...
@@ -41,7 +41,20 @@ class Authcontroller extends Controller
         $client = Client::create($request->all());
         $client->api_token = Str::random(60);
         $client->status = true;
-        $client->save();
+        $acc_num = rand(11111111111111,99999999999999);
+        $client->account_number = $acc_num;
+        $valid2 = validator()->make([$acc_num] , [
+            'acc_num' => 'unique:account_numbers'
+        ]);
+        if ($valid2->fails()) {
+            # code...
+            return json_return(0 , 'failed' , 'this account number is taken');
+        }
+        else
+        {
+            $client->save();
+        } 
+        
         $client->client_role()->attach(4 , ['model_type' => 'test' , 'model_id' => $client->id]);
         return json_return(1 , 'success' , $client);
         }

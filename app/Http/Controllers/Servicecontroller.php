@@ -14,7 +14,7 @@ class Servicecontroller extends Controller
         $validator = validator()->make($request->all() , [
 
            
-            'receiver_id' => 'required', 
+            'receiver_account_number' => 'required', 
             'amount' => 'required' ,
             'currency_id' => 'required'
         ]);
@@ -28,17 +28,17 @@ class Servicecontroller extends Controller
 
             $reduced_balance = $sender_user->balance - $request->amount;
             $sender_user->update(['balance' => $reduced_balance]);
-            $received_user = Client::where('id' , $request->receiver_id)->first();
+            $received_user = Client::where('account_number' , $request->receiver_account_number)->first();
             $received_user->update(['balance' => $received_user->balance + $request->amount]);
             $request->user()->transactions()->create([
-                'sender_id' => $request->user()->id,
-                'receiver_id' => $request->receiver_id , 
+                'sender_account_number' => $request->user()->account_number,
+                'receiver_account_number' => $request->receiver_account_number , 
                 'amount' => $request->amount ,
                 'currency_id' => $request->currency_id ,
             ]);
 
            $currency = Currency::where('id' ,$request->currency_id )->first();
-            return json_return(1 , 'success' , ' تم تحويل مبلغ'  . ' '. $request->amount . ' ' . $currency->name . ' '. 'الي العمل رقم ' . $request->receiver_id);
+            return json_return(1 , 'success' , ' تم تحويل مبلغ'  . ' '. $request->amount . ' ' . $currency->name . ' '. 'الي العمل رقم ' . $request->receiver_account_number);
         }
         else {
             
@@ -55,8 +55,8 @@ class Servicecontroller extends Controller
     {
         $validator = validator()->make($request->all() , [
 
-           'sender_id' => 'required' ,
-            'receiver_id' => 'required', 
+           'sender_account_number' => 'required' ,
+            'receiver_account_number' => 'required', 
             'amount' => 'required' ,
             'currency_id' => 'required'
         ]);
@@ -65,23 +65,23 @@ class Servicecontroller extends Controller
              return json_return(0 , 'failed' , 'payment validation error ');
         }
 
-        $sender_user = Client::where('id' , $request->sender_id)->first();
+        $sender_user = Client::where('account_number' , $request->sender_account_number)->first();
         if ($sender_user->balance >= $request->amount) {
             
 
             $reduced_balance = $sender_user->balance - $request->amount;
             $sender_user->update(['balance' => $reduced_balance]);
-            $received_user = Client::where('id' , $request->receiver_id)->first();
+            $received_user = Client::where('account_number' , $request->receiver_account_number)->first();
             $received_user->update(['balance' => $received_user->balance + $request->amount]);
             $sender_user->transactions()->create([
-                'sender_id' => $request->sender_id,
-                'receiver_id' => $request->receiver_id , 
+                'sender_account_number' => $request->sender_account_number,
+                'receiver_account_number' => $request->receiver_account_number , 
                 'amount' => $request->amount ,
                 'currency_id' => $request->currency_id ,
             ]);
 
            $currency = Currency::where('id' ,$request->currency_id )->first();
-            return json_return(1 , 'success' , ' تم تحويل مبلغ'  . ' '. $request->amount . ' ' . $currency->name . ' '. 'الي العمل رقم ' . $request->receiver_id);
+            return json_return(1 , 'success' , ' تم تحويل مبلغ'  . ' '. $request->amount . ' ' . $currency->name . ' '. 'الي العميل '.$received_user->name . ' رقم ' . $request->receiver_account_number);
         }
         else {
             
