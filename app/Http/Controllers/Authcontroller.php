@@ -34,9 +34,7 @@ class Authcontroller extends Controller
              return json_return(0 , 'failed' , 'validation error');
             }
         else {
-        $phone = Client::where('phone' , $request->phone)->first();
-        if($phone == NULL)
-        {
+       
         $request->merge(["password" => bcrypt($request->password)]);
         $client = Client::create($request->all());
         $client->api_token = Str::random(60);
@@ -57,11 +55,7 @@ class Authcontroller extends Controller
         
         $client->client_role()->attach(4 , ['model_type' => 'test' , 'model_id' => $client->id]);
         return json_return(1 , 'success' , $client);
-        }
-        else
-        {
-            return json_return(0 , 'failed' , 'this phone is taken by another user');
-        }   
+         
         }
      
     }
